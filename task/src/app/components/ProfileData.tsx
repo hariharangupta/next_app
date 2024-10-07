@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { useRouter } from "next/navigation";
 
 const Profile = () => {
@@ -38,9 +38,14 @@ const Profile = () => {
       .then((response) => {
         setProfileData(response.data.data);
         console.log(response.data.data);
+        setLoading(false);
       })
-      .catch((error) => console.log(error));
-  }, []);
+      .catch((error) => {
+        console.log(error);
+        setError(error);
+        setLoading(false);
+      });
+  }, [router]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -75,6 +80,22 @@ const Profile = () => {
         setError("Failed to update profile.");
       });
   };
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-screen main">
+        <h1>Error</h1>
+      </div>
+    );
+  }
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen main">
+        <h1>Loading</h1>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full h-full pt-10 px-24 profile">
@@ -128,7 +149,7 @@ const Profile = () => {
               className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
               htmlFor="whatsapp_no"
             >
-              What's App
+              Whats App
             </label>
             <input
               className="appearance-none block w-full bg-gray-200 border-stone-300 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-gray-200"

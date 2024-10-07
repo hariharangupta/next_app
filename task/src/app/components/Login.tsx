@@ -2,8 +2,8 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import img from "../../../public/images/img.jpg";
-import axios, { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 const LogIn: React.FC = () => {
   const router = useRouter();
@@ -35,13 +35,42 @@ const LogIn: React.FC = () => {
         localStorage.setItem("data", JSON.stringify(dataToStore));
       }
       console.log(response.data);
-    } catch (error: any) {
-      setError(error.response?.data.message || "Login failed");
-      console.error("error", error);
+    } catch (error: unknown) {
+      let errorMessage = "An unknown error occurred";
+
+      if (typeof error === "object" && error !== null) {
+        if ("response" in error) {
+          const responseError = error as {
+            response?: { data?: { message?: string } };
+          };
+          errorMessage =
+            responseError.response?.data?.message || "Login failed";
+        } else if ("message" in error) {
+          errorMessage = (error as Error).message;
+        }
+      }
+
+      console.error(errorMessage);
     } finally {
       setLoading(false);
     }
   };
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-screen main">
+        <h1>Error</h1>
+      </div>
+    );
+  }
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen main">
+        <h1>Loading</h1>
+      </div>
+    );
+  }
 
   return (
     <div className="flex items-center justify-center min-h-screen main">

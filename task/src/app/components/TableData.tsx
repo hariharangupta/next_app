@@ -1,15 +1,15 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+// import axios from "axios";
 import { useRouter } from "next/navigation";
-import data from "../../util/tabledata";
+import tableData from "../../util/tabledata";
 import { debounce } from "lodash";
 
 const TableData = () => {
   const router = useRouter();
-  const [tableData, setTableData] = useState(data);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string>("");
+  // const [tableData, setTableData] = useState(data);
+  // const [loading, setLoading] = useState<boolean>(false);
+  // const [error, setError] = useState<string>("");
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 10;
   const [searchValue, setSearchValue] = useState<string>("");
@@ -27,25 +27,25 @@ const TableData = () => {
       return;
     }
 
-    setLoading(true);
-    setError("");
+    // setLoading(true);
+    // setError("");
 
-    axios
-      .get("https://ditscrm.divsolution.com/task-Api", {
-        // headers: {
-        //   Authorization: `Bearer ${getData.token}`,
-        // },
-      })
-      .then((response) => {
-        console.log(response.data.data);
-      })
-      .catch((error) => {
-        setError("Error fetching data");
-        console.error(error);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    // axios
+    //   .get("https://ditscrm.divsolution.com/task-Api", {
+    //      headers: {
+    //       Authorization: `Bearer ${getData.token}`,
+    //      },
+    //   })
+    //   .then((response) => {
+    //     console.log(response.data.data);
+    //   })
+    //   .catch((error) => {
+    //     setError("Error fetching data");
+    //     console.error(error);
+    //   })
+    //   .finally(() => {
+    //     setLoading(false);
+    //   });
   }, [router]);
 
   const filteredData = tableData.filter((item) => {
@@ -81,6 +81,22 @@ const TableData = () => {
     setCurrentPage(1);
     debounceSearch(event.target.value);
   };
+
+  // if (error) {
+  //   return (
+  //     <div className="flex items-center justify-center min-h-screen main">
+  //       <h1>Error</h1>
+  //     </div>
+  //   );
+  // }
+
+  // if (loading) {
+  //   return (
+  //     <div className="flex items-center justify-center min-h-screen main">
+  //       <h1>Loading</h1>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="flex items-center justify-center w-screen h-screen table">
