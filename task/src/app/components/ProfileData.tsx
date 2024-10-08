@@ -18,8 +18,8 @@ const Profile = () => {
   useEffect(() => {
     const storedData = localStorage.getItem("data");
     const getData = storedData ? JSON.parse(storedData) : null;
-    if (!getData && !getData.token) {
-      router.push("/");
+    if (!getData && !getData?.token) {
+      router.push("/login");
       return;
     }
     console.log(getData, "getData");

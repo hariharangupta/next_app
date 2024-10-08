@@ -12,9 +12,8 @@ export default function Home() {
     const storedData = localStorage.getItem("data");
     const getData = storedData ? JSON.parse(storedData) : null;
 
-    // Check if user data exists and if the token is valid
-    if (!getData || !getData.token) {
-      router.push("/"); // Redirect to home if not authenticated
+    if (!getData || !getData?.token) {
+      router.push("/login");
     }
   }, [router]);
 

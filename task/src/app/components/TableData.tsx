@@ -22,8 +22,8 @@ const TableData = () => {
   useEffect(() => {
     const storedData = localStorage.getItem("data");
     const getData = storedData ? JSON.parse(storedData) : null;
-    if (!getData || !getData.token) {
-      router.push("/");
+    if (!getData || !getData?.token) {
+      router.push("/login");
       return;
     }
 
@@ -51,11 +51,11 @@ const TableData = () => {
   const filteredData = tableData.filter((item) => {
     return (
       item.fullName.toLowerCase().includes(debouncedValue.toLowerCase()) ||
-      item.phoneNumber.includes(debouncedValue) ||
+      item.phoneNumber.replaceAll("-", "").includes(debouncedValue) ||
       item.email.toLowerCase().includes(debouncedValue.toLowerCase()) ||
-      item.adId.toString().includes(debouncedValue) ||
+      item.adId.toString().toLowerCase().includes(debouncedValue) ||
       item.campaignName.toLowerCase().includes(debouncedValue.toLowerCase()) ||
-      item.postCode.includes(debouncedValue)
+      item.postCode.toLowerCase().includes(debouncedValue)
     );
   });
 

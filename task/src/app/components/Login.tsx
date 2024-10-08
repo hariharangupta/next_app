@@ -31,7 +31,7 @@ const LogIn: React.FC = () => {
       };
 
       if (dataToStore.token) {
-        router.push("/profile");
+        router.push("/");
         localStorage.setItem("data", JSON.stringify(dataToStore));
       }
       console.log(response.data);

@@ -1,9 +1,12 @@
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
+  const router = useRouter();
+
   return (
-    <div className="pt-10 px-20 flex flex-col">
-      <nav className="bg-slate-300 rounded shadow-md h-12 flex justify-start items-center mb-6">
+    <div className=" bg-slate-300 rounded shadow-md h-12  mb-6 flex items-center justify-between  px-20">
+      <nav className="">
         <ul
           className="flex justify-start items-center"
           style={{ listStyleType: "none", padding: 0 }}
@@ -19,6 +22,16 @@ const Navbar = () => {
           </li>
         </ul>
       </nav>
+      <div className="">
+        <button
+          onClick={() => {
+            router.push("/login");
+            localStorage.clear();
+          }}
+        >
+          Logout
+        </button>
+      </div>
     </div>
   );
 };
